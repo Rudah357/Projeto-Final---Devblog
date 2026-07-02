@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>DevBlog</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
 </head>
 <body class="bg-light">
@@ -19,10 +19,34 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home' %}">Início</a>
-                        </li>
+                        </li >
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'sobre_nos' %}">Sobre</a>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                📁 Categorias
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="max-height: 300px; overflow-y: auto;">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'home' %}">Todos os Posts</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                
+                                {% for categoria in lista_categorias %}
+                                    <li>
+                                        <a class="dropdown-item {% if request.GET.categoria == categoria.id|stringformat:'i' %}active{% endif %}" 
+                                        href="{% url 'home' %}?categoria={{ categoria.id }}">
+                                            {{ categoria.nome }}
+                                        </a>
+                                    </li>
+                                {% empty %}
+                                    <li><span class="dropdown-item text-muted">Nenhuma categoria</span></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        
                     </ul>
                 </div>
             </div>

@@ -2,7 +2,41 @@
 
 {% block content %}
 
-    <h3>Últimas Notícias de Tecnologia</h3>
-    <p>Bem-vindo ao DevBlog! Nossos redatores já estão trabalhando nos artigos.</p>
+    <div class="container">
+        
+        <h2 class="mb-4">
+            {% if request.GET.categoria %}
+                Resultados da Categoria
+            {% else %}
+                Últimas Notícias
+            {% endif %}
+        </h2>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for noticia in lista_artigos %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        {% if noticia.imagem %}
+                            <img src="{{ noticia.imagem.url }}" class="card-img-top" alt="{{ noticia.titulo }}">
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <span class="badge bg-secondary mb-2">{{ noticia.categoria.nome }}</span>
+                            <h5 class="card-title">{{ noticia.titulo }}</h5>
+                            <p class="card-text">{{ noticia.resumo|truncatewords:20 }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="{% url 'detalhe_noticia' noticia.id %}" class="btn btn-dark btn-sm w-100">Ler Notícia</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted fs-5">Nenhuma notícia encontrada para esta categoria.</p>
+                    <a href="{% url 'home' %}" class="btn btn-outline-dark btn-sm">Ver todas as notícias</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

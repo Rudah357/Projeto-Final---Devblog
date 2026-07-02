@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <span class="badge bg-secondary mb-2">{{ noticia.categoria.nome }}</span>
+            <h1 class="fw-bold mb-3">{{ noticia.titulo }}</h1>
+            <p class="text-muted">Publicado em: {{ noticia.data_publicacao|date:"d/m/Y" }}</p>
+            
+            {% if noticia.imagem %}
+                <img src="{{ noticia.imagem.url }}" class="img-fluid rounded mb-4 w-100" alt="{{ noticia.titulo }}">
+            {% endif %}
+            
+            <hr>
+            
+            <div class="fs-5 lh-base text-justify">
+                {{ noticia.conteudo|linebreaks }}
+            </div>
+            
+            <a href="{% url 'home' %}" class="btn btn-outline-dark mt-4">← Voltar para o início</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
