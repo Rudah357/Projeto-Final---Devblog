@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'blog'
+    'blog',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'devblog_db',          # O banco que criamos no Workbench
+        'USER': 'root',                # O superusuário padrão
+        'PASSWORD': 'senacrs',         # A senha oficial do nosso laboratório
+        'HOST': 'localhost',           # O servidor roda nesta própria máquina
+        'PORT': '3307',                # A porta padrão do MySQL
     }
 }
 

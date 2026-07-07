@@ -7,6 +7,7 @@
             <span class="badge bg-secondary mb-2">{{ noticia.categoria.nome }}</span>
             <h1 class="fw-bold mb-3">{{ noticia.titulo }}</h1>
             <p class="text-muted">Publicado em: {{ noticia.data_publicacao|date:"d/m/Y" }}</p>
+            <a href="{% url 'home' %}" class="btn btn-outline-dark mt-4">← Voltar para o início</a>
             
             {% if noticia.imagem %}
                 <img src="{{ noticia.imagem.url }}" class="img-fluid rounded mb-4 w-100" alt="{{ noticia.titulo }}">
