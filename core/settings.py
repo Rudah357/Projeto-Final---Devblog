@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -136,3 +137,5 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACESS_TOKEN_LIFETIME': timedelta(days=1)
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
