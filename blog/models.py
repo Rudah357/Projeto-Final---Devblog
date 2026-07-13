@@ -28,3 +28,17 @@ class MensagemContato(models.Model):
 
     def __str__(self):
         return f"Mensagem de {self.nome}"
+    
+    
+class Comentario(models.Model):
+    artigo = models.ForeignKey(
+        'Artigo', 
+        on_delete=models.CASCADE, 
+        related_name='comentarios'
+    )
+    nome = models.CharField(max_length=100, verbose_name="Nome")
+    texto = models.TextField(verbose_name="Comentário")
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comentário de {self.nome} em {self.noticia.titulo}"

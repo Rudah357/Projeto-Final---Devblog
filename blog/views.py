@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Artigo, Categoria
-from .forms import ContatoForm
+from .forms import ContatoForm, ComentarioForm
 from .serializers import ArtigoSerializer, CategoriaSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -103,3 +103,25 @@ def api_listar_categorias(request):
     serializer = CategoriaSerializer(categorias, many=True)
 
     return Response(serializer.data)
+
+
+def detalhe_noticia(request, pk):
+    artigo = get_object_or_404(Artigo, pk=pk)
+    
+    comentarios = artigo.comentarios.all().order_by('-data_criacao')
+    
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.artigo = artigo
+            comentario.save()
+            return redirect('detalhe_noticia', pk=artigo.pk)
+    else:
+        form = ComentarioForm()
+
+    return render(request, 'blog/detalhe.html', {
+        'artigo': artigo,
+        'comentarios': comentarios,
+        'form': form
+    })
